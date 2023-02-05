@@ -52,6 +52,17 @@ public class ThridPersonController : MonoBehaviour
         horizontalVelocity.y = 0;
         if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
+        LookAt();
+    }
+    private void LookAt()
+    {
+        Vector3 direction = rb.velocity;
+        direction.y = 0f;
+
+        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
+            rb.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        else
+            rb.angularVelocity= Vector3.zero;
     }
 
     private Vector3 GetCameraForward(Camera playerCamera)
@@ -79,7 +90,7 @@ public class ThridPersonController : MonoBehaviour
     private bool IsGrounded()
     {
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
             return true;
         else
             return false;
