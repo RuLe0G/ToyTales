@@ -16,7 +16,7 @@ public class ThridPersonController : MonoBehaviour
     [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
-    private float maxSpeed = 5f;
+    public float maxSpeed = 5f;
     public Vector3 forceDirection { get; private set; } = Vector3.zero;
 
     [SerializeField]
