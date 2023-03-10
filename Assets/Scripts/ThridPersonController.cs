@@ -10,14 +10,14 @@ public class ThridPersonController : MonoBehaviour
     private ThridPersonAsset playerActionsAsset;
     private InputAction move;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     [SerializeField]
     private float movementForce = 1f;
     [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
     private float maxSpeed = 5f;
-    private Vector3 forceDirection = Vector3.zero;
+    public Vector3 forceDirection { get; private set; } = Vector3.zero;
 
     [SerializeField]
     private Camera playerCamera;
