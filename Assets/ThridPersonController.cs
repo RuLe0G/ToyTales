@@ -31,7 +31,6 @@ public class ThridPersonController : MonoBehaviour
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
-
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -124,14 +123,14 @@ public class ThridPersonController : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
         if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
         {
-            forceDirection += Vector3.up * jumpForce;
-            coyoteTimeCounter = 0f;
-            jumpBufferCounter= 0f;
+            Jump();
+            return;
         }
-        else
-        { 
-            Vault();
-        }
+        Vault();
+    }
+    private void Jump()
+    {
+        forceDirection += Vector3.up * jumpForce;
     }
     private void Vault()
     {
@@ -164,11 +163,14 @@ public class ThridPersonController : MonoBehaviour
         
     }
 
+
     private bool IsGrounded()
     {
         Ray ray = new Ray(this.transform.position - Vector3.up * 0.25f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
+        {
             return true;
+        }
         else
             return false;
     }
