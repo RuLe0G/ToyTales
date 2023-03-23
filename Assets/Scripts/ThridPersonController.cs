@@ -7,25 +7,32 @@ using UnityEngine.InputSystem;
 
 public class ThridPersonController : MonoBehaviour
 {
+    [Header("Setup")]
     private ThridPersonAsset playerActionsAsset;
     private InputAction move;
-
-    public Rigidbody rb;
-    [SerializeField]
-    private float movementForce = 1f;
-    [SerializeField]
-    private float jumpForce = 5f;
-    [SerializeField]
-    public float maxSpeed = 5f;
+    private Rigidbody rb;
     public Vector3 forceDirection { get; private set; } = Vector3.zero;
 
     [SerializeField]
     private Camera playerCamera;
 
+    [Header("Movement")]
+    [SerializeField]
+    private float movementForce = 1f;
+    [SerializeField]
+    public float maxSpeed = 5f;
+
+    [Header("Jumping")]
+    [SerializeField]
+    private float jumpForce = 5f;
+
+
+    [Header("Vaulting")]
     private int vaultLayer;
     private float playerHeight;
     private float playerRadius;
 
+    [Header("Additional functions")]
     private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
     private float jumpBufferTime = 0.2f;

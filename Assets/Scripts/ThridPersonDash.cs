@@ -52,7 +52,8 @@ public class ThridPersonDash : MonoBehaviour
         //if (dashCdTimer > 0) return;
         //else dashCdTimer = dashCd;
         player.maxSpeed = 15;
-        Vector3 forceToApply = Vector3.forward * dashForce + Vector3.up * dashUpwardForce;
+        Vector3 v = new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z);
+        Vector3 forceToApply = v * dashForce + Vector3.up * dashUpwardForce;
 
         rb.AddForce(forceToApply, ForceMode.Impulse);
 
