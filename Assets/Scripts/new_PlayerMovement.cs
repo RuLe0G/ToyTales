@@ -6,7 +6,14 @@ using UnityEngine.InputSystem;
 public class new_PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public int moveSpeed;
+    private float moveSpeed;
+    public float walkSpeed;
+    public float wallrunSpeed;
+
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+
+    public float speedIncreaseMultiplier;
 
     public float groundDrag;
 
@@ -29,6 +36,16 @@ public class new_PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        air,
+        wallRuning
+    }
+
+    public bool wallrunning;
 
     private ThridPersonAsset playerActionsAsset;
     private InputAction move;
@@ -56,12 +73,15 @@ public class new_PlayerMovement : MonoBehaviour
         rb.freezeRotation= true;
         readyToJump = true;
     }
+    
+
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
         
         MyInput();
         SpeedControl();
+        StateHandler();
 
         if (grounded)
             rb.drag = groundDrag;
@@ -78,6 +98,52 @@ public class new_PlayerMovement : MonoBehaviour
         verticalInput = move.ReadValue<Vector2>().y;
 
     }
+    private void StateHandler()
+    {
+        if (wallrunning)
+        {
+            state = MovementState.wallRuning;
+            desiredMoveSpeed = wallrunSpeed;
+        }
+        else if(grounded)
+        {
+            state = MovementState.walking;
+            moveSpeed = walkSpeed;
+        }
+        else
+        {
+            state = MovementState.air;
+        }
+
+        //if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        //{
+        //    StopAllCoroutines();
+        //    StartCoroutine(SmoothlyLerpMoveSpeed());
+        //}
+        //else
+        //{
+        //    moveSpeed = desiredMoveSpeed;
+        //}
+
+        //lastDesiredMoveSpeed = desiredMoveSpeed;
+    }
+    //private IEnumerator SmoothlyLerpMoveSpeed()
+    //{
+    //    float time = 0;
+    //    float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+    //    float startValue = moveSpeed;
+
+    //    while (time < difference)
+    //    {
+    //        moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+
+    //        time += Time.deltaTime * speedIncreaseMultiplier;
+
+    //        yield return null;
+    //    }
+
+    //    moveSpeed = desiredMoveSpeed;
+    //}
     private void MovePlayer()
     { 
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -85,6 +151,8 @@ public class new_PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+
+        if(!wallrunning) rb.useGravity= true;
     }
     private void SpeedControl()
     {
