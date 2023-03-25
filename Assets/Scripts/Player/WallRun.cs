@@ -20,6 +20,9 @@ public class WallRun : MonoBehaviour
     [Header("Input")]
     private float horizontalInput;
     private float verticalInput;
+    private ThridPersonAsset playerActionsAsset;
+    private InputAction move;
+    private InputAction jump;
 
     [Header("Detection")]
     public float wallCheckDistance;
@@ -43,9 +46,6 @@ public class WallRun : MonoBehaviour
     private new_PlayerMovement pm;
     private Rigidbody rb;
 
-    private ThridPersonAsset playerActionsAsset;
-    private InputAction move;
-    private InputAction jump;
 
     private void Awake()
     {
