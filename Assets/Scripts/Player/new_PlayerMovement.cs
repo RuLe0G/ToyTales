@@ -20,7 +20,7 @@ public class new_PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool readyToJump;
+    private bool readyToJump;
 
     [Header("Ground Check")]
     public float playerHeight;

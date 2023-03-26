@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch",
+                    "name": "Pickup",
                     "type": "Button",
                     "id": "58237174-244e-4e32-8e9f-380d35bc296b",
                     "expectedControlType": "Button",
@@ -178,18 +178,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "6cf83747-194d-4971-a16d-8026f8d30235",
-                    "path": "<Keyboard>/leftCtrl",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
