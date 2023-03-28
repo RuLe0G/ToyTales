@@ -81,7 +81,7 @@ public class new_PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation= true;
         rb.useGravity = true;
-        Physics.gravity *= 2f;
+        Physics.gravity = new Vector3(0,-9.8f*2,0);
         readyToJump = true;
     }
     
