@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class CharStats : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class CharStats : MonoBehaviour
     private int HP;
     [SerializeField]
     private int maxHP;
+    [SerializeField]
+    private Freezer freezer;
 
     public event EventHandler onHpChanged;
+
+    public VisualEffect damageParticles;
 
     public void Awake()
     {
@@ -27,18 +32,47 @@ public class CharStats : MonoBehaviour
         return false;
     }
 
+    public bool isInvulnerable = false;
+
     public void takeDamage(int incomingDamage)
-    { 
-        HP -= incomingDamage;
-        if (HP <= 0)
-        {
-            death();
+    {
+        if (!isInvulnerable) { 
+        
+            PlayDamageParticles();
+
+            StartCoroutine(DelayedHitStop(0.1f));
+
+            StartCoroutine(SetInvulnerable(0.7f));
+
+            HP -= incomingDamage;
+            if (HP <= 0)
+            {
+                death();
+            }
+            if (onHpChanged != null)
+            {
+                onHpChanged(this, EventArgs.Empty);
+            }
         }
-        if (onHpChanged != null)
-        {
-            onHpChanged(this, EventArgs.Empty);
-        }
-    } 
+    }
+
+    private IEnumerator DelayedHitStop(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        freezer.Freeze();
+    }
+
+    private IEnumerator SetInvulnerable(float duration)
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(duration);
+        isInvulnerable = false;
+    }
+
+    private void PlayDamageParticles()
+    {
+        damageParticles.Play();
+    }
 
     public void takeHeal(int incomingHeal)
     { 
