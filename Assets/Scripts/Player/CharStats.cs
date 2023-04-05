@@ -71,7 +71,9 @@ public class CharStats : MonoBehaviour
 
     private void PlayDamageParticles()
     {
-        damageParticles.Play();
+        var partic = Instantiate(damageParticles,transform.position,Quaternion.identity);
+        Destroy(partic.gameObject, 2f);
+        partic.Play();
     }
 
     public void takeHeal(int incomingHeal)
