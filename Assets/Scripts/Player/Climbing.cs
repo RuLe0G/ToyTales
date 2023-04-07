@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -59,17 +57,17 @@ public class Climbing : MonoBehaviour
     }
     private void StateMachine()
     {
-        if(wallFront && move.ReadValue<Vector2>().y > 0 && wallLockAngle < maxWallLookAngle)
+        if (wallFront && move.ReadValue<Vector2>().y > 0 && wallLockAngle < maxWallLookAngle)
         {
-            if(!climbing && climbTimer > 0) StartClimb();
+            if (!climbing && climbTimer > 0) StartClimb();
 
-            if(climbTimer> 0) climbTimer-= Time.deltaTime;
-            if(climbTimer<0) StopClimb();
+            if (climbTimer > 0) climbTimer -= Time.deltaTime;
+            if (climbTimer < 0) StopClimb();
         }
 
         else
         {
-            if(climbing) StopClimb();
+            if (climbing) StopClimb();
         }
     }
     private void WallCheck()
@@ -77,7 +75,7 @@ public class Climbing : MonoBehaviour
         wallFront = Physics.SphereCast(PObj.position, sphereCastRadius, PObj.forward, out frontWallHit, detectionLenght, whatIsWall);
         wallLockAngle = Vector3.Angle(PObj.forward, -frontWallHit.normal);
 
-        if(pm.grounded)
+        if (pm.grounded)
         {
             climbTimer = maxClimbTime;
         }
@@ -90,7 +88,7 @@ public class Climbing : MonoBehaviour
     }
     private void ClimbingMovement()
     {
-        rb.velocity = new Vector3(rb.velocity.x,climbSpeed,rb.velocity.z);
+        rb.velocity = new Vector3(rb.velocity.x, climbSpeed, rb.velocity.z);
     }
     private void StopClimb()
     {

@@ -1,12 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Сactus : MonoBehaviour
 {
     public Transform target; // Ссылка на объект главного героя
     public float attackRange = 1.0f; // Расстояние, на котором противник начинает атаку
-    public float viewRange = 5.0f; 
+    public float viewRange = 5.0f;
     public float moveSpeed = 3.0f; // Скорость движения противника
     public float attackDelay = 3.0f; // Задержка между атаками
 
@@ -23,7 +22,7 @@ public class Сactus : MonoBehaviour
 
         initialScale = transform.localScale;
     }
-    
+
     void Update()
     {
         switch (currentState)
@@ -48,7 +47,7 @@ public class Сactus : MonoBehaviour
             case State.Attack:
                 Attack();
                 if (Time.time - lastAttackTime > attackDelay)
-                {                    
+                {
                     lastAttackTime = Time.time;
                     idleTime = attackDelay;
                     currentState = State.Idle; // После атаки переходим в состояние "Idle"

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -26,7 +25,7 @@ public class CharStats : MonoBehaviour
         return HP;
     }
     public bool isMaxHp()
-    { 
+    {
         if (HP == maxHP)
             return true;
         return false;
@@ -36,8 +35,9 @@ public class CharStats : MonoBehaviour
 
     public void takeDamage(int incomingDamage)
     {
-        if (!isInvulnerable) { 
-        
+        if (!isInvulnerable)
+        {
+
             PlayDamageParticles();
 
             StartCoroutine(DelayedHitStop(0.1f));
@@ -71,13 +71,13 @@ public class CharStats : MonoBehaviour
 
     private void PlayDamageParticles()
     {
-        var partic = Instantiate(damageParticles,transform.position,Quaternion.identity);
+        var partic = Instantiate(damageParticles, transform.position, Quaternion.identity);
         Destroy(partic.gameObject, 2f);
         partic.Play();
     }
 
     public void takeHeal(int incomingHeal)
-    { 
+    {
         HP += incomingHeal;
         if (HP > maxHP)
             HP = maxHP;

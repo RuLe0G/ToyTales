@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -79,12 +78,12 @@ public class new_PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation= true;
+        rb.freezeRotation = true;
         rb.useGravity = true;
-        Physics.gravity = new Vector3(0,-9.8f*2,0);
+        Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         readyToJump = true;
     }
-    
+
 
     private void Update()
     {
@@ -109,29 +108,29 @@ public class new_PlayerMovement : MonoBehaviour
 
         CheckJumpBuffer();
     }
-	
+
     private void FixedUpdate()
     {
         MovePlayer();
     }
     private void MyInput()
-    { 
+    {
         horizontalInput = move.ReadValue<Vector2>().x;
         verticalInput = move.ReadValue<Vector2>().y;
 
     }
-	private void CheckJumpBuffer()
-{
-    if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
+    private void CheckJumpBuffer()
     {
-        jumpBufferCounter = 0;
-        Jump();
+        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
+        {
+            jumpBufferCounter = 0;
+            Jump();
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
     }
-    else
-    {
-        jumpBufferCounter -= Time.deltaTime;
-    }
-}
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
     private MovementState lastState;
@@ -155,7 +154,7 @@ public class new_PlayerMovement : MonoBehaviour
             state = MovementState.wallRuning;
             desiredMoveSpeed = wallrunSpeed;
         }
-        else if(grounded)
+        else if (grounded)
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
@@ -164,16 +163,16 @@ public class new_PlayerMovement : MonoBehaviour
         {
             state = MovementState.air;
 
-            if(desiredMoveSpeed < moveSpeed)
+            if (desiredMoveSpeed < moveSpeed)
                 desiredMoveSpeed = moveSpeed;
         }
 
         bool desiredMoveSpeedHasChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
-        if(lastState == MovementState.dashing) keepMomentum= true;
+        if (lastState == MovementState.dashing) keepMomentum = true;
 
-        if(desiredMoveSpeedHasChanged)
+        if (desiredMoveSpeedHasChanged)
         {
-            if(keepMomentum)
+            if (keepMomentum)
             {
                 StopAllCoroutines();
                 StartCoroutine(SmoothlyLerpMoveSpeed());
@@ -214,14 +213,14 @@ public class new_PlayerMovement : MonoBehaviour
     }
 
     private void MovePlayer()
-    { 
+    {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        if(grounded)
+        if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
-        if(!wallrunning) rb.useGravity= true;
+        if (!wallrunning) rb.useGravity = true;
     }
     private void SpeedControl()
     {
@@ -236,15 +235,15 @@ public class new_PlayerMovement : MonoBehaviour
     private void PressJump(InputAction.CallbackContext obj)
     {
         if (grounded)
-		{
-			readyToJump = false;
-			Jump();
-			Invoke(nameof(ResetJump), jumpCooldown);
-		}
-		else
-		{	
-			jumpBufferCounter = jumpBufferTime;
-		}
+        {
+            readyToJump = false;
+            Jump();
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+        else
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
     }
     private void Jump()
     {

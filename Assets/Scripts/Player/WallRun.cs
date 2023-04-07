@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class WallRun : MonoBehaviour
@@ -110,7 +106,7 @@ public class WallRun : MonoBehaviour
                 exitWallTimer = exitWallTime;
             }
 
-            if(jump.WasPressedThisFrame())
+            if (jump.WasPressedThisFrame())
                 WallJump();
         }
         else if (exitingWall)
