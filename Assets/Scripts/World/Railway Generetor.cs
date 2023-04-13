@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +16,8 @@ public class RailwayGeneretor : MonoBehaviour
     private Vector3 spawnPos;
     public int roadsToSpawn;
 
+    public float roadSpeed;
+
     [Header("Debug")]
     private ThridPersonAsset playerActionsAsset;
 
@@ -26,13 +30,13 @@ public class RailwayGeneretor : MonoBehaviour
 
         playerActionsAsset.Player.DEBUG.started += DebugKey;
         playerActionsAsset.Player.Enable();
-        //TriggerExit.OnRoadExit += SpawnRoad;
+        TriggerExit.OnRoadExited += SpawnRoad;
     }
     private void OnDisable()
     {
         playerActionsAsset.Player.DEBUG.started -= DebugKey;
         playerActionsAsset.Player.Disable();
-        //TriggerExit.OnRoadExit -= SpawnRoad;
+        TriggerExit.OnRoadExited -= SpawnRoad;
     }
 
     private void DebugKey(InputAction.CallbackContext obj)
@@ -93,13 +97,21 @@ public class RailwayGeneretor : MonoBehaviour
         return nextRoad;
     }
 
+    private void Update()
+    {
+        spawnPos += (Vector3.forward * roadSpeed * Time.deltaTime);
+    }
+
     void SpawnRoad()
     {
         RoadData roadToSpawn = TakeNextRoad();
 
         GameObject obj = roadToSpawn.levelRoads[Random.Range(0, roadToSpawn.levelRoads.Length)];
+
+
         prevRoad = roadToSpawn;
-        Instantiate(obj, spawnPos + spawnOrigin, Quaternion.identity);
+        GameObject obj2 = Instantiate(obj, spawnPos + spawnOrigin, Quaternion.identity);
+        obj2.GetComponent<RoadMovement>().SetSpeed(roadSpeed);
     }
 
     public void UpdateSpawnOrigin(Vector3 originDelta)
