@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1002a75f1b2622745acea01c54f93b80, type: 3}
   m_Name: Road2
   m_EditorClassIdentifier: 
-  roadSize: {x: 20, y: 20}
+  roadSize: {x: 100, y: 100}
   levelRoads:
   - {fileID: 4010747911906223732, guid: e75f8d563da0a864fb092ac0bd6be13a, type: 3}
   - {fileID: 2209781369563937477, guid: f3580a7ac21cea04cbaa78be94e5d2a0, type: 3}
