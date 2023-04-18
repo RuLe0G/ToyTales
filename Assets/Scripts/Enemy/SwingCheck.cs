@@ -4,87 +4,49 @@ public class SwingCheck : MonoBehaviour
 {
     public int damage;
 
-    public int enemyDamage;
-
     public float knockBackForce;
 
     public Vector3 knockBackDirection;
 
     private LayerMask lmask;
 
+    private AudioSource aud;
+
     [HideInInspector]
     public Collider col;
 
-    public bool useRaycastCheck;
-
-    private AudioSource aud;
-
     private bool physicalCollider;
 
-    [HideInInspector]
-    public bool damaging;
-
-    public bool startActive;
-
-    public bool interpolateBetweenFrames;
-
-    private Vector3 previousPosition;
-
-    private bool ignoreTick;
+    private bool collising;
 
     private void Start()
     {
-        this.col = base.GetComponent<Collider>();
-        if (!this.col.isTrigger)
+        col = GetComponent<Collider>();
+        if (!col.isTrigger)
         {
-            this.physicalCollider = true;
-        }
-        else if (!this.startActive)
-        {
-            this.col.enabled = false;
+            physicalCollider = true;
         }
         else
         {
-            this.DamageStart();
+            DamageStart();
         }
-        if (this.interpolateBetweenFrames)
-        {
-            this.previousPosition = base.transform.position;
-        }
-        this.aud = base.GetComponent<AudioSource>();
+        aud = GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (this.damaging)
+        if (collising)
         {
-            this.CheckCollision(other);
+            CheckCollision(other);
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (this.damaging)
+        if (collising)
         {
-            this.CheckCollision(collision.collider);
+            CheckCollision(collision.collider);
         }
     }
-    private void Update()
-    {
-        if (this.interpolateBetweenFrames && this.damaging && this.col.attachedRigidbody)
-        {
-            if (!this.ignoreTick)
-            {
-                foreach (RaycastHit raycastHit in this.col.attachedRigidbody.SweepTestAll(this.previousPosition - base.transform.position, Vector3.Distance(this.previousPosition, base.transform.position), QueryTriggerInteraction.Collide))
-                {
-                    this.CheckCollision(raycastHit.collider);
-                }
-            }
-            else
-            {
-                this.ignoreTick = false;
-            }
-            this.previousPosition = base.transform.position;
-        }
-    }
+
     private void CheckCollision(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -94,25 +56,18 @@ public class SwingCheck : MonoBehaviour
     }
     public void DamageStart()
     {
-        this.ignoreTick = true;
-        this.damaging = true;
-        if (!this.physicalCollider)
+        if (!physicalCollider)
         {
-            this.col.enabled = true;
-        }
-        if (this.aud != null)
-        {
-            this.aud.Play();
+            col.enabled = true;
         }
     }
     public void DamageStop()
     {
-        this.damaging = false;
-        if (!this.physicalCollider)
+        if (!physicalCollider)
         {
-            if (this.col)
+            if (col)
             {
-                this.col.enabled = false;
+                col.enabled = false;
             }
         }
     }

@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Redirector_animation : MonoBehaviour
 {
-    [SerializeField] private CactusMelee _scriptOnOtherObject;
+    [SerializeField] private Invoker _otherInvoke;
+
 
     private void Awake()
     {
-        _scriptOnOtherObject = transform.parent.GetComponent<CactusMelee>();
+        _otherInvoke = transform.GetComponent<Invoker>();
     }
 
     public void EventInvoke()
     {
-        _scriptOnOtherObject.SwingEnd();
+        _otherInvoke.Interact();
     }
 }

@@ -36,7 +36,7 @@ public class CactusMelee : MonoBehaviour
         {
             enm = GetComponent<Cactus>();
         }
-        //CancelAttack();
+        CancelAttack();
         if (rb)
         {
             rb.velocity = Vector3.zero;
@@ -89,6 +89,42 @@ public class CactusMelee : MonoBehaviour
         enm.stopped = false;
         anim.SetTrigger("StopSwing");
     }
+    public void DamageStart()
+    {
+        aud.Play();
+
+        if(swingCheck == null)
+        {
+            swingCheck = GetComponentInChildren<SwingCheck>(); 
+        }
+        swingCheck.damage = 30;
+        swingCheck.DamageStart();
+    }
+    public void DamageEnd()
+    {
+        if(rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        enm.attacking= false;
+        if (swingCheck = null)
+        {
+            swingCheck = GetComponentInChildren<SwingCheck>();
+        }
+        swingCheck.DamageStop();
+    }
+    public void CancelAttack()
+    {
+        enm.attacking = false;
+        enm.stopped = false;
+        coolDown = defaultCoolDown;
+        if (swingCheck == null)
+        {
+            swingCheck = GetComponentInChildren<SwingCheck>();
+        }
+        swingCheck.DamageStop();
+    }
+
     public void TrackTick()
     {
         if (gameObject.activeInHierarchy)

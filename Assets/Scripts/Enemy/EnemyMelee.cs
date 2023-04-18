@@ -131,7 +131,6 @@ public class EnemyMelee : MonoBehaviour
             swingCheck = base.GetComponentInChildren<SwingCheck>();
         }
         swingCheck.damage = 30;
-        swingCheck.enemyDamage = 10;
         swingCheck.DamageStart();
     }
     public void DamageEnd()
