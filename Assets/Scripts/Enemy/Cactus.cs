@@ -1,16 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Cactus : MonoBehaviour
 {
     [Header("Base")]
     public float health;
     private Rigidbody rb;
     public GameObject player;
     public NavMeshAgent nma;
-    private float currentSpeed;
-    private EnemyMelee em;
-    private EnemyProjectiles ep;
+    private float curSpeed;
     private float defaultSpeed;
     public Vector3 agentVelocity;
 
@@ -24,20 +22,16 @@ public class Enemy : MonoBehaviour
     public AudioClip[] hurtSounds;
     public AudioClip deathSound;
 
-    public LayerMask lmask;
     public Transform target;
 
     public bool stopped;
-
     public bool attacking;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        em = GetComponent<EnemyMelee>();
-        ep = GetComponent<EnemyProjectiles>();
         smr = GetComponentInChildren<SkinnedMeshRenderer>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         aud = GetComponent<AudioSource>();
 
         target = player.transform;
@@ -45,7 +39,7 @@ public class Enemy : MonoBehaviour
         defaultSpeed = nma.speed;
         nma.acceleration = 30f;
         nma.angularSpeed = 400f;
-        nma.speed = 15f;
+        nma.speed = 5f;
     }
     public void GetHurt()
     {
@@ -64,12 +58,13 @@ public class Enemy : MonoBehaviour
             aud.Play();
         }
     }
-
     private void Death()
     {
-        this.aud.clip = this.deathSound;
-        this.aud.pitch = UnityEngine.Random.Range(0.85f, 1.35f);
-        this.aud.Play();
+        aud.clip = deathSound;
+        aud.pitch = UnityEngine.Random.Range(0.85f, 1.35f);
+        aud.Play();
+
+        anim.SetTrigger("Death");
 
         target = null;
 

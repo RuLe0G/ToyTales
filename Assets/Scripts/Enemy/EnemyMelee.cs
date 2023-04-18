@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,12 +12,13 @@ public class EnemyMelee : MonoBehaviour
 
     private float defaultCoolDown = 0.5f;
 
-    public GameObject swingSound;
     private Rigidbody rb;
     private SwingCheck swingCheck;
 
     public Material originalMaterial;
     public Material biteMaterial;
+
+    public bool damaging;
 
     public bool track;
 
@@ -39,7 +38,7 @@ public class EnemyMelee : MonoBehaviour
         {
             transform.LookAt(new Vector3(enm.target.position.x, transform.position.y, enm.target.position.z));
 
-           transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(enm.target.position.x, transform.position.y, enm.target.position.z) - transform.position), Time.deltaTime * 720f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(enm.target.position.x, transform.position.y, enm.target.position.z) - transform.position), Time.deltaTime * 720f);
         }
         if (coolDown == 0f)
         {
@@ -62,8 +61,8 @@ public class EnemyMelee : MonoBehaviour
         {
             enm = GetComponent<Enemy>();
         }
-        //CancelAttack();
-        if (enm.grounded && rb)
+        CancelAttack();
+        if (rb)
         {
             rb.velocity = Vector3.zero;
             rb.isKinematic = true;
@@ -79,7 +78,7 @@ public class EnemyMelee : MonoBehaviour
         {
             nma = enm.nma;
         }
-        if (!enm.grounded || !(nma != null) || !nma.enabled || !nma.isOnNavMesh || !(enm.target != null))
+        if (!(nma != null) || !nma.enabled || !nma.isOnNavMesh || !(enm.target != null))
         {
             if (nma == null)
             {
@@ -113,7 +112,6 @@ public class EnemyMelee : MonoBehaviour
             nma.isStopped = true;
         }
         anim.SetTrigger("Swing");
-        Object.Instantiate<GameObject>(swingSound, transform);
     }
     public void SwingEnd()
     {
@@ -123,6 +121,54 @@ public class EnemyMelee : MonoBehaviour
         }
         enm.stopped = false;
     }
+    public void DamageStart()
+    {
+        damaging = true;
+        aud.Play();
+
+        if (swingCheck == null)
+        {
+            swingCheck = base.GetComponentInChildren<SwingCheck>();
+        }
+        swingCheck.damage = 30;
+        swingCheck.enemyDamage = 10;
+        swingCheck.DamageStart();
+    }
+    public void DamageEnd()
+    {
+        if (rb == null)
+        {
+            rb = base.GetComponent<Rigidbody>();
+        }
+        damaging = false;
+        enm.attacking = false;
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
+        if (swingCheck == null)
+        {
+            swingCheck = base.GetComponentInChildren<SwingCheck>();
+        }
+        swingCheck.DamageStop();
+    }
+    public void StopTracking()
+    {
+        track = false;
+        enm.attacking = true;
+    }
+    public void CancelAttack()
+    {
+        damaging = false;
+        enm.attacking = false;
+        enm.stopped = false;
+        track = false;
+        coolDown = defaultCoolDown;
+        if (swingCheck == null)
+        {
+            swingCheck = base.GetComponentInChildren<SwingCheck>();
+        }
+        swingCheck.DamageStop();
+    }
+
     public void TrackTick()
     {
         if (gameObject.activeInHierarchy)
@@ -131,7 +177,7 @@ public class EnemyMelee : MonoBehaviour
             {
                 nma = enm.nma;
             }
-            if (enm.grounded && nma != null && nma.enabled && nma.isOnNavMesh && enm.target != null)
+            if (nma != null && nma.enabled && nma.isOnNavMesh && enm.target != null)
             {
                 RaycastHit raycastHit;
                 if (Physics.Raycast(enm.target.position + Vector3.up * 0.1f, Vector3.down, out raycastHit, float.PositiveInfinity, lmask))
