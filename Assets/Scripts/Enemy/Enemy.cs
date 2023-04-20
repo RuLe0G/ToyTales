@@ -1,22 +1,22 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header("Base")]
     public float health;
     private Rigidbody rb;
-    public GameObject player;
+    public Transform player;
     public NavMeshAgent nma;
-    private float currentSpeed;
-    private EnemyMelee em;
-    private EnemyProjectiles ep;
-    private float defaultSpeed;
-    public Vector3 agentVelocity;
+
+    [Header("Movement")]
+    public float _speed = 10f;
+    public float _angularSpeed = 400f;
+    public float _acceleration = 30f;
+
 
     [Header("Visual")]
     public Animator anim;
-    public Material mat;
     public Renderer smr;
 
     [Header("Audio")]
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     public AudioClip[] hurtSounds;
     public AudioClip deathSound;
 
-    public LayerMask lmask;
+    public LayerMask whatIsPlayer;
     public Transform target;
 
     public bool stopped;
@@ -34,20 +34,17 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        em = GetComponent<EnemyMelee>();
-        ep = GetComponent<EnemyProjectiles>();
         smr = GetComponentInChildren<SkinnedMeshRenderer>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         aud = GetComponent<AudioSource>();
 
         target = player.transform;
 
-        defaultSpeed = nma.speed;
-        nma.acceleration = 30f;
-        nma.angularSpeed = 400f;
-        nma.speed = 15f;
+        nma.acceleration = _speed;
+        nma.angularSpeed = _angularSpeed;
+        nma.speed = _acceleration;
     }
-    public void GetHurt()
+    public virtual void GetHurt()
     {
         float num = 1;
 
@@ -65,11 +62,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Death()
+    protected virtual void Death()
     {
         this.aud.clip = this.deathSound;
         this.aud.pitch = UnityEngine.Random.Range(0.85f, 1.35f);
         this.aud.Play();
+
+        anim.SetTrigger("Death");
 
         target = null;
 
