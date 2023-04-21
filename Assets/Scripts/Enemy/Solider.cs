@@ -7,7 +7,6 @@ public class Solider : Enemy
     bool alreadyAttacked;
     public GameObject projectile;
     public int maxShootCount = 10;
-
     private int shootCount = 0;
     public bool isReload = false;
 
@@ -57,13 +56,16 @@ public class Solider : Enemy
         if (distanceToWalkPoint.magnitude < 1f)
         { 
             walkPointSet = false;
-            isReload = true;
+            ResetShootCount();
         }
     }
     private void SearchWalkPoint()
     {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        randomZ = Mathf.Clamp(randomZ, 2, walkPointRange);
+        randomX = Mathf.Clamp(randomZ, 2, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -90,17 +92,27 @@ public class Solider : Enemy
 
             shootCount++;
             if (shootCount >= maxShootCount)
-            {
                 isReload = true;
-            }
 
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
 
+    private void ResetShootCount()
+    {
+        shootCount = 0;
+        isReload = false;
+    }
+
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    protected override void Death()
+    {
+        death = true;
+        base.Death();
     }
 
     //DEBUG GIZMOS
@@ -110,10 +122,5 @@ public class Solider : Enemy
         Gizmos.DrawWireSphere(transform.position, attkRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
-    protected override void Death()
-    {
-        death = true;
-        base.Death();
     }
 }
