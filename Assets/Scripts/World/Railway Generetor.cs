@@ -97,9 +97,9 @@ public class RailwayGeneretor : MonoBehaviour
         return nextRoad;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        spawnPos += (Vector3.forward * roadSpeed * Time.deltaTime);
+        spawnPos += (Vector3.forward * roadSpeed * Time.fixedDeltaTime);
     }
 
     void SpawnRoad()

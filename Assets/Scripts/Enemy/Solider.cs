@@ -6,11 +6,15 @@ public class Solider : Enemy
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public int maxShootCount = 10;
+
+    private int shootCount = 0;
+    public bool isReload = false;
 
     public float sightRange, attkRange;
     public bool playerInSightRange, playerInAttackRange;
 
-    //Patroling
+    [Header("walkPoint")]
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
@@ -31,10 +35,15 @@ public class Solider : Enemy
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attkRange, whatIsPlayer);
 
-            if (!playerInSightRange && !playerInAttackRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+            if (!playerInSightRange && !playerInAttackRange && !isReload) Stay();
+            if (playerInSightRange && !playerInAttackRange && !isReload) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange && !isReload) AttackPlayer();
+            if (isReload) Patroling();
         }
+    }
+    private void Stay()
+    {
+
     }
     private void Patroling()
     {
@@ -46,7 +55,10 @@ public class Solider : Enemy
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         if (distanceToWalkPoint.magnitude < 1f)
+        { 
             walkPointSet = false;
+            isReload = true;
+        }
     }
     private void SearchWalkPoint()
     {
@@ -57,10 +69,6 @@ public class Solider : Enemy
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
-    }
-    private void Stay()
-    {
-
     }
     private void ChasePlayer()
     {
@@ -79,6 +87,13 @@ public class Solider : Enemy
             rb.AddForce(transform.up * 3f, ForceMode.Impulse);
 
             alreadyAttacked = true;
+
+            shootCount++;
+            if (shootCount >= maxShootCount)
+            {
+                isReload = true;
+            }
+
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
