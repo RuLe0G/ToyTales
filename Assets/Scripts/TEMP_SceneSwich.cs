@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class TEMP_SceneSwich : MonoBehaviour
 {
+    //Singleton<TEMP_SceneSwich>
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
