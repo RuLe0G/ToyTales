@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,7 +77,7 @@ public class ThirdPersonCam : MonoBehaviour
     }
 
     private void SwichCameraStyle(CameraStyle inStyle)
-    { 
+    {
         fightCam.SetActive(false);
         topDownCam.SetActive(false);
         thirdPersonCam.SetActive(false);
@@ -89,6 +86,6 @@ public class ThirdPersonCam : MonoBehaviour
         if (inStyle == CameraStyle.Topdown) topDownCam.SetActive(true);
         if (inStyle == CameraStyle.Fight) fightCam.SetActive(true);
 
-        curStyle= inStyle;
+        curStyle = inStyle;
     }
 }

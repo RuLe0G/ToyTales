@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class ThridPersonDash : MonoBehaviour
 {
@@ -40,6 +36,8 @@ public class ThridPersonDash : MonoBehaviour
     private bool isTrailActive;
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
 
+    public Volume dashVolume;
+
     private void Awake()
     {
         playerActionsAsset = new ThridPersonAsset();
@@ -69,23 +67,28 @@ public class ThridPersonDash : MonoBehaviour
 
     private void Update()
     {
-        if(dashCdTimer > 0)
+        if (dashCdTimer > 0)
             dashCdTimer -= Time.deltaTime;
     }
 
     private void Dash()
     {
+
         if (dashCdTimer > 0) return;
         else dashCdTimer = dashCd;
         pm.dashing = true;
 
-        isTrailActive= true;
+        dashVolume.weight = 1;
+
+        isTrailActive = true;
         StartCoroutine(ActivateTrails(activeTime));
 
         Vector3 forceToApply = PObj.forward * dashForce + PObj.up * dashUpwardForce;
 
+        StartCoroutine(VolumeReducing());
+
         delayedForceToAplly = forceToApply;
-        Invoke(nameof(DelayDashForce), 0.025f);
+        Invoke(nameof(DelayDashForce), dashDuration);
 
         Invoke(nameof(ResetDash), dashDuration);
     }
@@ -101,15 +104,30 @@ public class ThridPersonDash : MonoBehaviour
         pm.dashing = false;
     }
 
+    IEnumerator VolumeReducing()
+    {
+        float elapsedTime = 0f;
+        float startWeight = dashVolume.weight;
+
+        while (elapsedTime < dashDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float weight = Mathf.Lerp(startWeight, 0, elapsedTime / dashDuration);
+            dashVolume.weight = weight;
+            yield return null;
+        }
+        dashVolume.weight = 0;
+    }
+
     IEnumerator ActivateTrails(float timeActive)
-    { 
+    {
         while (timeActive > 0)
         {
             timeActive -= meshRefreshRate;
 
             if (skinnedMeshRenderers == null)
                 skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-            for(int i =0; i < skinnedMeshRenderers.Length; i++)
+            for (int i = 0; i < skinnedMeshRenderers.Length; i++)
             {
                 GameObject gObj = new GameObject();
                 gObj.transform.SetPositionAndRotation(alterPObj.position, alterPObj.rotation);
@@ -121,7 +139,7 @@ public class ThridPersonDash : MonoBehaviour
                 mf.mesh = mesh;
                 mr.material = mat;
 
-                StartCoroutine(AnimateMaterial(mr.material,0,shaderVarRate, shaderVarRefreshRate));
+                StartCoroutine(AnimateMaterial(mr.material, 0, shaderVarRate, shaderVarRefreshRate));
 
                 Destroy(gObj, meshDestroyDelay);
             }

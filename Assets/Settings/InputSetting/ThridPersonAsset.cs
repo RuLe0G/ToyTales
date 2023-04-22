@@ -80,6 +80,15 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DEBUG"",
+                    ""type"": ""Button"",
+                    ""id"": ""6095c79b-1f15-4e7b-a38d-164510048d85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -335,6 +344,17 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de5e867a-4ebc-4c0e-81d5-b181f68d1bd1"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUG"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -372,6 +392,7 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_DEBUG = m_Player.FindAction("DEBUG", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -439,6 +460,7 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_DEBUG;
     public struct PlayerActions
     {
         private @ThridPersonAsset m_Wrapper;
@@ -449,6 +471,7 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @DEBUG => m_Wrapper.m_Player_DEBUG;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -476,6 +499,9 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @DEBUG.started += instance.OnDEBUG;
+            @DEBUG.performed += instance.OnDEBUG;
+            @DEBUG.canceled += instance.OnDEBUG;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -498,6 +524,9 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @DEBUG.started -= instance.OnDEBUG;
+            @DEBUG.performed -= instance.OnDEBUG;
+            @DEBUG.canceled -= instance.OnDEBUG;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -541,5 +570,6 @@ public partial class @ThridPersonAsset: IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnDEBUG(InputAction.CallbackContext context);
     }
 }

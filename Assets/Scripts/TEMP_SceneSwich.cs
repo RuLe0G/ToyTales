@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TEMP_SceneSwich : MonoBehaviour
 {
+    //Singleton<TEMP_SceneSwich>
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))

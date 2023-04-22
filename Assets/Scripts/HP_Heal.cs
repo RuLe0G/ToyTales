@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HP_Heal : MonoBehaviour
@@ -17,7 +15,7 @@ public class HP_Heal : MonoBehaviour
                 return;
             }
             else
-            { 
+            {
                 cs.takeHeal(amountHP);
                 Destroy(this.gameObject);
             }
