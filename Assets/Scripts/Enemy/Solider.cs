@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Solider : Enemy
@@ -37,7 +38,7 @@ public class Solider : Enemy
             if (!playerInSightRange && !playerInAttackRange && !isReload) Stay();
             if (playerInSightRange && !playerInAttackRange && !isReload) ChasePlayer();
             if (playerInAttackRange && playerInSightRange && !isReload) AttackPlayer();
-            if (isReload) Patroling();
+            if (isReload && canMove) Patroling();
         }
     }
     private void Stay()
@@ -49,13 +50,17 @@ public class Solider : Enemy
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        { 
             nma.SetDestination(walkPoint);
+            anim.SetInteger("run", 1);
+        }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         if (distanceToWalkPoint.magnitude < 1f)
         { 
             walkPointSet = false;
+            anim.SetInteger("run", 0);
             ResetShootCount();
         }
     }
@@ -75,18 +80,20 @@ public class Solider : Enemy
     private void ChasePlayer()
     {
         nma.SetDestination(player.position);
+        anim.SetInteger("run", 1);
     }
     private void AttackPlayer()
     {
         nma.SetDestination(transform.position);
+        anim.SetInteger("run", 0);
 
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 3f, ForceMode.Impulse);
+            anim.SetTrigger("Attck");
+            canMove = false;
+
 
             alreadyAttacked = true;
 
@@ -96,6 +103,14 @@ public class Solider : Enemy
 
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+    }
+    bool canMove = true;
+    public void InitAttk()
+    {
+        Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+        rb.AddForce(transform.up * 3f, ForceMode.Impulse);
+        canMove = true;
     }
 
     private void ResetShootCount()

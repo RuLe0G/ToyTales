@@ -19,6 +19,8 @@ public class CharStats : MonoBehaviour
     public void Awake()
     {
         HP = maxHP;
+
+        freezer = FindObjectOfType<Freezer>();
     }
     public int getHealth()
     {
@@ -71,7 +73,7 @@ public class CharStats : MonoBehaviour
 
     private void PlayDamageParticles()
     {
-        var partic = Instantiate(damageParticles, transform.position, Quaternion.identity);
+        var partic = Instantiate(damageParticles, transform.position + Vector3.up, Quaternion.identity);
         Destroy(partic.gameObject, 2f);
         partic.Play();
     }

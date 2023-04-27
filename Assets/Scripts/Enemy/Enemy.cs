@@ -59,6 +59,7 @@ public abstract class Enemy : MonoBehaviour
             aud.clip = hurtSounds[UnityEngine.Random.Range(0, hurtSounds.Length)];
             aud.pitch = UnityEngine.Random.Range(0.85f, 1.35f);
             aud.Play();
+            anim.SetTrigger("TakeDamage");
         }
     }
 
@@ -78,10 +79,10 @@ public abstract class Enemy : MonoBehaviour
         rb.maxAngularVelocity = float.PositiveInfinity;
         rb.velocity = Vector3.zero;
 
-        Vector3 normalized = (player.transform.position - transform.position).normalized;
-        normalized = -normalized;
-        rb.AddForce(normalized * 5f, ForceMode.Impulse);
-        rb.AddTorque(rb.transform.right * 0.3f, ForceMode.VelocityChange);
+        //Vector3 normalized = (player.transform.position - transform.position).normalized;
+        //normalized = -normalized;
+        //rb.AddForce(normalized * 5f, ForceMode.Impulse);
+        //rb.AddTorque(rb.transform.right * 0.3f, ForceMode.VelocityChange);
 
         rb = null;
         nma = null;

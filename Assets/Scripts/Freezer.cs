@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Freezer : MonoBehaviour
+public class Freezer : Singleton<Freezer>
 {
     [Range(0f, 1f)]
     public float duration = 0.1f;
