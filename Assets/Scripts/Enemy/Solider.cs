@@ -99,7 +99,10 @@ public class Solider : Enemy
 
             shootCount++;
             if (shootCount >= maxShootCount)
+            {
                 isReload = true;
+                ResetShootCount();
+            }
 
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }

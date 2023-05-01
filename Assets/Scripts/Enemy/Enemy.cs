@@ -20,7 +20,7 @@ public abstract class Enemy : MonoBehaviour
     public Renderer smr;
 
     [Header("Audio")]
-    private AudioSource aud;
+    protected AudioSource aud;
     public AudioClip[] hurtSounds;
     public AudioClip deathSound;
 
