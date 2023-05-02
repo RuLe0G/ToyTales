@@ -8,7 +8,7 @@ public class SwingCheck : MonoBehaviour
 
     public Vector3 knockBackDirection;
 
-    private LayerMask lmask;
+    public LayerMask lmask;
 
     [Header("Audio")]
     private AudioSource aud;
@@ -50,11 +50,13 @@ public class SwingCheck : MonoBehaviour
         {
             aud.clip = hitAud;
             aud.Play();
-            Debug.Log("CheckCollision - Player");
+            Debug.Log("Игрок получил по жопе");
         }
-        if (other.gameObject.layer == lmask)
+        if (other.gameObject.layer == 11)
         {
-            Debug.Log("CheckCollision - " + lmask.value);
+            var enm = other.gameObject;
+            Debug.Log("Враг получил по жопе");
+            enm.GetComponent<Enemy>().GetHurt(damage);
         }
     }
 }

@@ -315,6 +315,11 @@ MonoBehaviour:
   damage: 3
   knockBackForce: 1
   knockBackDirection: {x: 0, y: 1, z: 0}
+  lmask:
+    serializedVersion: 2
+    m_Bits: 0
+  atcAud: {fileID: 0}
+  hitAud: {fileID: 0}
   col: {fileID: 0}
 --- !u!1 &1547136005455180169
 GameObject:
@@ -1060,7 +1065,7 @@ GameObject:
   - component: {fileID: 1673065807082048989}
   - component: {fileID: 2916504461008100421}
   - component: {fileID: 6772686815005456649}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Main_solider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1082,7 +1087,7 @@ Transform:
   - {fileID: 3202770843036548529}
   - {fileID: 5887164173189194359}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1747121395221619902
 Rigidbody:

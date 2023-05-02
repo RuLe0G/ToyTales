@@ -44,9 +44,8 @@ public abstract class Enemy : MonoBehaviour
         nma.angularSpeed = _angularSpeed;
         nma.speed = _acceleration;
     }
-    public virtual void GetHurt()
+    public virtual void GetHurt(int num = 0)
     {
-        float num = 1;
 
         health -= num;
 
@@ -73,11 +72,11 @@ public abstract class Enemy : MonoBehaviour
 
         target = null;
 
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        rb.angularDrag = 0.001f;
-        rb.maxAngularVelocity = float.PositiveInfinity;
-        rb.velocity = Vector3.zero;
+        //rb.isKinematic = false;
+        //rb.useGravity = true;
+        //rb.angularDrag = 0.001f;
+        //rb.maxAngularVelocity = float.PositiveInfinity;
+        //rb.velocity = Vector3.zero;
 
         //Vector3 normalized = (player.transform.position - transform.position).normalized;
         //normalized = -normalized;
@@ -86,5 +85,8 @@ public abstract class Enemy : MonoBehaviour
 
         rb = null;
         nma = null;
+        Collider col = GetComponent<Collider>();
+        col.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }

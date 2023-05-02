@@ -87,7 +87,10 @@ public class Solider : Enemy
         nma.SetDestination(transform.position);
         anim.SetInteger("run", 0);
 
-        transform.LookAt(player);
+        Vector3 targetPostition = new Vector3(player.position.x,
+                                       this.transform.position.y,
+                                       player.position.z);
+        transform.LookAt(targetPostition);
 
         if (!alreadyAttacked)
         {
