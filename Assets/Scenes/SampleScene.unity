@@ -1947,11 +1947,6 @@ PrefabInstance:
       propertyPath: freezer
       value: 
       objectReference: {fileID: 530269405}
-    - target: {fileID: 7740816576061736598, guid: 5d3c8e54c9f978649a8f0623fd799fef,
-        type: 3}
-      propertyPath: PObj
-      value: 
-      objectReference: {fileID: 1570359695}
     - target: {fileID: 8300304445383666944, guid: 5d3c8e54c9f978649a8f0623fd799fef,
         type: 3}
       propertyPath: m_RootOrder
@@ -9141,12 +9136,12 @@ PrefabInstance:
     - target: {fileID: 7778749571942392719, guid: be4c47261618ad54aabfc9ef533dbfc7,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001936243
+      value: -0.000000019362428
       objectReference: {fileID: 0}
     - target: {fileID: 7778749571942392719, guid: be4c47261618ad54aabfc9ef533dbfc7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000001196664
+      value: 0.000000011966639
       objectReference: {fileID: 0}
     - target: {fileID: 7778749571942392719, guid: be4c47261618ad54aabfc9ef533dbfc7,
         type: 3}
@@ -16954,17 +16949,17 @@ PrefabInstance:
     - target: {fileID: 3690639362585100708, guid: 436a1fbd88427c04d97457abd746e7c5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: -1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 4079366372765978541, guid: 436a1fbd88427c04d97457abd746e7c5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000014636622
+      value: -0.00000001463662
       objectReference: {fileID: 0}
     - target: {fileID: 4079366372765978541, guid: 436a1fbd88427c04d97457abd746e7c5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000904593
+      value: 0.0000000090459285
       objectReference: {fileID: 0}
     - target: {fileID: 5701137833287047102, guid: 436a1fbd88427c04d97457abd746e7c5,
         type: 3}
@@ -17646,6 +17641,7 @@ MonoBehaviour:
   grounded: 0
   orientation: {fileID: 7798140602134674720}
   PObj: {fileID: 0}
+  playerAnim: {fileID: 0}
   state: 0
   dashing: 0
   climbing: 0
