@@ -6,10 +6,10 @@ using UnityEngine.Rendering;
 public class ThridPersonDash : MonoBehaviour
 {
     [Header("Setup")]
-    public Transform orientation;
+    private Transform orientation;
     private Rigidbody rb;
     private new_PlayerMovement pm;
-    public Transform PObj;
+    private Transform PObj;
 
     [Header("Dashing")]
     public float dashForce;
@@ -59,6 +59,8 @@ public class ThridPersonDash : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<new_PlayerMovement>();
+        orientation = pm.orientation;
+        PObj = pm.PObj;
     }
     private void DashKey(InputAction.CallbackContext obj)
     {

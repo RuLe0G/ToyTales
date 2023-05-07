@@ -4,10 +4,10 @@ using UnityEngine.InputSystem;
 public class Climbing : MonoBehaviour
 {
     [Header("Setup")]
-    public Transform orientation;
+    private Transform orientation;
     private Rigidbody rb;
     public new_PlayerMovement pm;
-    public Transform PObj;
+    private Transform PObj;
     public LayerMask whatIsWall;
 
     [Header("Climbing")]
@@ -47,6 +47,8 @@ public class Climbing : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<new_PlayerMovement>();
+        orientation = pm.orientation;
+        PObj = pm.PObj;
     }
     private void Update()
     {

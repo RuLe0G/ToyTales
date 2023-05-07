@@ -43,7 +43,7 @@ Transform:
   - {fileID: 7808160314623061039}
   - {fileID: 2747189042811947085}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4068921228029129861
 Rigidbody:
@@ -135,12 +135,14 @@ MonoBehaviour:
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  playerHeight: 2
+  playerHeight: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   grounded: 0
   orientation: {fileID: 7808160314623061039}
+  PObj: {fileID: 8921236914734766204}
+  playerAnim: {fileID: 8921236914724992520}
   state: 0
   dashing: 0
   climbing: 0
@@ -173,7 +175,6 @@ MonoBehaviour:
   exitWallTime: 0.4
   useGravity: 1
   gravityCounterForce: 20
-  orientation: {fileID: 7808160314623061039}
 --- !u!114 &8354934846564176491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,8 +197,6 @@ MonoBehaviour:
   wallJumpSideForce: 15
   wallCheckDistance: 0.7
   minJumpHeight: 2
-  orientation: {fileID: 7808160314623061039}
-  PObj: {fileID: 8921236914734766204}
 --- !u!114 &2244817652536367915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,8 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bee91448013364897286a0f47d88ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 7808160314623061039}
-  PObj: {fileID: 8921236914734766204}
   dashForce: 20
   dashUpwardForce: 1
   dashDuration: 0.25
@@ -237,9 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfad980871a28949bc2f4d54dd211f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 7808160314623061039}
   pm: {fileID: 7740816576061736598}
-  PObj: {fileID: 8921236914734766204}
   whatIsWall:
     serializedVersion: 2
     m_Bits: 256
@@ -264,7 +259,6 @@ MonoBehaviour:
   boxLayer:
     serializedVersion: 2
     m_Bits: 512
-  PObj: {fileID: 8921236914734766204}
 --- !u!114 &7943335228607258529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +275,6 @@ MonoBehaviour:
   btnLayer:
     serializedVersion: 2
     m_Bits: 1024
-  PObj: {fileID: 8921236914734766204}
 --- !u!114 &4218894365437249147
 MonoBehaviour:
   m_ObjectHideFlags: 0

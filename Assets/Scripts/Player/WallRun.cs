@@ -38,7 +38,7 @@ public class WallRun : MonoBehaviour
     public float gravityCounterForce;
 
     [Header("Setup")]
-    public Transform orientation;
+    private Transform orientation;
     private new_PlayerMovement pm;
     private Rigidbody rb;
 
@@ -63,6 +63,7 @@ public class WallRun : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<new_PlayerMovement>();
+        orientation = pm.orientation;
     }
 
     private void Update()

@@ -20,9 +20,11 @@ public class WallJumping : MonoBehaviour
     private bool wallForward;
 
     [Header("Setup")]
-    public Transform orientation;
+    private Transform orientation;
     private Rigidbody rb;
-    public Transform PObj;
+    private Transform PObj;
+
+    Animator anim;
 
     private void Awake()
     {
@@ -42,6 +44,10 @@ public class WallJumping : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        new_PlayerMovement pm = GetComponent<new_PlayerMovement>();
+        orientation = pm.orientation;
+        PObj = pm.PObj;
+        anim = pm.playerAnim;
     }
 
     private void Update()
@@ -66,6 +72,7 @@ public class WallJumping : MonoBehaviour
     }
     private void WallJump()
     {
+        anim.SetTrigger("WallJump");
         Vector3 wallNormal = forwardWallhit.normal;
 
         Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;

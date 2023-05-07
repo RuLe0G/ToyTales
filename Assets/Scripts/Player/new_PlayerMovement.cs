@@ -33,6 +33,9 @@ public class new_PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
 
     public Transform orientation;
+    public Transform PObj;
+    public Animator playerAnim;
+    
 
     float horizontalInput;
     float verticalInput;
@@ -153,9 +156,11 @@ public class new_PlayerMovement : MonoBehaviour
         {
             state = MovementState.wallRuning;
             desiredMoveSpeed = wallrunSpeed;
+            playerAnim.SetFloat("WallRun", 1);
         }
         else if (grounded)
         {
+            playerAnim.SetFloat("WallRun", 0);
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
         }
@@ -212,9 +217,21 @@ public class new_PlayerMovement : MonoBehaviour
         keepMomentum = false;
     }
 
+    private int VectorRound(Vector3 a)
+    {
+        int x = Mathf.Abs(Mathf.RoundToInt(a.x));
+        int y = Mathf.Abs(Mathf.RoundToInt(a.y));
+        int z = Mathf.Abs(Mathf.RoundToInt(a.z));
+
+        return x + y + z;
+    }
+
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        playerAnim.SetInteger("Speed", VectorRound(moveDirection));
+
         if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         else if (!grounded)

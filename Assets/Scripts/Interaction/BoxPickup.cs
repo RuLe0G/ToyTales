@@ -11,9 +11,14 @@ public class BoxPickup : MonoBehaviour
     private bool isHoldingBox = false;
 
     [Header("Setup")]
-    public Transform PObj;
+    private Transform PObj;
     private ThridPersonAsset playerActionsAsset;
 
+    private void Start()
+    {
+        new_PlayerMovement pm = GetComponent<new_PlayerMovement>();
+        PObj = pm.PObj;
+    }
     private void Awake()
     {
         playerActionsAsset = new ThridPersonAsset();
