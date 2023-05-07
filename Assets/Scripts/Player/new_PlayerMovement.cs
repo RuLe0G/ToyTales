@@ -19,7 +19,7 @@ public class new_PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    private bool readyToJump;
+    public bool readyToJump = true;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -28,9 +28,9 @@ public class new_PlayerMovement : MonoBehaviour
 
     [Header("Additional functions")]
     private float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
+    public float coyoteTimeCounter;
     private float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
+    public float jumpBufferCounter;
 
     public Transform orientation;
     public Transform PObj;
@@ -122,12 +122,13 @@ public class new_PlayerMovement : MonoBehaviour
         verticalInput = move.ReadValue<Vector2>().y;
 
     }
+    bool bufJump = false;
     private void CheckJumpBuffer()
     {
         if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
             jumpBufferCounter = 0;
-            Jump();
+            bufJump = true;
         }
         else
         {
@@ -251,7 +252,7 @@ public class new_PlayerMovement : MonoBehaviour
     }
     private void PressJump(InputAction.CallbackContext obj)
     {
-        if (grounded)
+         if (grounded && readyToJump && bufJump)
         {
             readyToJump = false;
             Jump();

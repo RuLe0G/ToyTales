@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Solider : Enemy
 {
@@ -8,7 +9,7 @@ public class Solider : Enemy
     bool alreadyAttacked;
     public GameObject projectile;
     public int maxShootCount = 10;
-    private int shootCount = 0;
+    public int shootCount = 0;
     public bool isReload = false;
 
     public float sightRange, attkRange;
@@ -69,13 +70,23 @@ public class Solider : Enemy
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        randomZ = Mathf.Clamp(randomZ, 2, walkPointRange);
-        randomX = Mathf.Clamp(randomZ, 2, walkPointRange);
+        //randomZ = Mathf.Clamp(randomZ, 2, walkPointRange);
+        //randomX = Mathf.Clamp(randomX, 2, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(walkPoint, out hit, 1.0f, NavMesh.AllAreas))
+        {           
+            walkPoint = hit.position;
+            walkPoint = new Vector3(walkPoint.x, walkPoint.y + 1.5f, walkPoint.z);
             walkPointSet = true;
+        }
+
+
+        //if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        //    walkPointSet = true;
     }
     private void ChasePlayer()
     {
@@ -104,7 +115,6 @@ public class Solider : Enemy
             if (shootCount >= maxShootCount)
             {
                 isReload = true;
-                ResetShootCount();
             }
 
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
