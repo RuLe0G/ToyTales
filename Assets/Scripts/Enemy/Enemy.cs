@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -61,9 +62,10 @@ public abstract class Enemy : MonoBehaviour
             anim.SetTrigger("TakeDamage");
         }
     }
-
+    public event Action<Enemy> DeathEvent;
     protected virtual void Death()
     {
+        DeathEvent?.Invoke(this);
         this.aud.clip = this.deathSound;
         this.aud.pitch = UnityEngine.Random.Range(0.85f, 1.35f);
         this.aud.Play();

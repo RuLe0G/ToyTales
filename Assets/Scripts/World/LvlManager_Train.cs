@@ -9,7 +9,30 @@ public class LvlManager_Train : LvlManager
     void Start()
     {
         _trainHolder = (LvlHolder_Train)_holder;
+
+        foreach (var enemy in _trainHolder.enemies)
+        {
+            enemy.DeathEvent += OnEnemyDeath;
+        }
     }
+    void OnEnemyDeath(Enemy enemy)
+    {
+        _trainHolder.enemies.Remove(enemy);
+    }
+
+    bool chek1 = true;
+
+    private void Update()
+    {
+        if (chek1 && _trainHolder.enemies.Count <= 0) 
+        {
+            chek1 = false;
+
+            Activate0();
+        }
+    }
+
+
     public void OpenDoor()
     {
         StartCoroutine(DoorMove());

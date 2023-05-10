@@ -90,7 +90,9 @@ public class new_PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        float groundCheckRadius = 0.3f;
+        Vector3 groundCheckPosition = transform.position + Vector3.down * (playerHeight * 0.5f + groundCheckRadius);
+        grounded = Physics.CheckSphere(groundCheckPosition, groundCheckRadius, whatIsGround);
         if (grounded)
         {
             coyoteTimeCounter = coyoteTime;
