@@ -8,6 +8,12 @@ public class LvlHolder_Train : LvlHolder
 
     public List<Enemy> enemies = new List<Enemy>();
 
+    public List<Enemy> enemies2 = new List<Enemy>();
+
+    public GameObject Pof;
+
+
+
 
     [Header("Cameras")]
     public GameObject DoorCamera;

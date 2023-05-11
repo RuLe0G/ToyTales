@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,13 +15,23 @@ public class LvlManager_Train : LvlManager
         {
             enemy.DeathEvent += OnEnemyDeath;
         }
+
+        foreach (var enemy in _trainHolder.enemies2)
+        {
+            enemy.DeathEvent += OnEnemy2Death;
+        }
     }
     void OnEnemyDeath(Enemy enemy)
     {
         _trainHolder.enemies.Remove(enemy);
     }
+    void OnEnemy2Death(Enemy enemy)
+    {
+        _trainHolder.enemies2.Remove(enemy);
+    }
 
     bool chek1 = true;
+    bool chek2 = true;
 
     private void Update()
     {
@@ -30,8 +41,33 @@ public class LvlManager_Train : LvlManager
 
             Activate0();
         }
+        if (chek2 && _trainHolder.enemies2.Count <= 0)
+        {
+            if(_trainHolder.enemies2.Count > 2)
+            { }
+            else
+            SpawnEnemy();
+        }
     }
 
+    public GameObject enmPref;
+
+    public void SpawnEnemy()
+    {
+        Destroy(Instantiate(_trainHolder.Pof, new Vector3(-2.72f, 5.03f, -11.05f), Quaternion.identity), 2f);
+        GameObject enm = Instantiate(enmPref, new Vector3(-2.72f, 5.03f, -11.05f), Quaternion.identity);
+        _trainHolder.enemies2.Add(enm.GetComponent<Enemy>());
+        enm.GetComponent<Cactus>().DeathEvent += OnEnemy2Death;
+
+        Destroy(Instantiate(_trainHolder.Pof, new Vector3(5.13f, 5.03f, -11.05f), Quaternion.identity), 2f);
+        GameObject enm2 = Instantiate(enmPref, new Vector3(5.13f, 5.03f, -11.05f), Quaternion.identity);
+        _trainHolder.enemies2.Add(enm2.GetComponent<Enemy>());
+        enm2.GetComponent<Cactus>().DeathEvent += OnEnemy2Death;
+    }
+    public void BoxPlaced()
+    {
+        chek2 = false;
+    }
 
     public void OpenDoor()
     {
