@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -78,6 +79,27 @@ public class WallJumping : MonoBehaviour
         Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        StopCoroutine(SmoothTurn(0.2f));
+        StartCoroutine(SmoothTurn(0.2f));
+
         rb.AddForce(forceToApply, ForceMode.Impulse);
+    }
+    private IEnumerator SmoothTurn(float duration)
+    {
+        Quaternion startRotation = PObj.transform.rotation;
+        Quaternion endRotation = Quaternion.LookRotation(-PObj.transform.forward, transform.up);
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+            float t = timeElapsed / duration;
+            PObj.transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        PObj.transform.rotation = endRotation;
     }
 }

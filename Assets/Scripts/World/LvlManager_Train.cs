@@ -43,7 +43,7 @@ public class LvlManager_Train : LvlManager
         }
         if (chek2 && _trainHolder.enemies2.Count <= 0)
         {
-            if(_trainHolder.enemies2.Count > 2)
+            if(_trainHolder.enemies2.Count >= 2)
             { }
             else
             SpawnEnemy();
