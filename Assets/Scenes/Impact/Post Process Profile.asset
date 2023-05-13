@@ -34,22 +34,6 @@ MonoBehaviour:
   highlightsEnd:
     m_OverrideState: 1
     m_Value: 1
---- !u!114 &-2524512767009099106
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
-  m_EditorClassIdentifier: 
-  active: 1
-  mode:
-    m_OverrideState: 1
-    m_Value: 2
 --- !u!114 &-1195597973434356861
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -110,7 +94,6 @@ MonoBehaviour:
   m_Name: Post Process Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -2524512767009099106}
   - {fileID: -1195597973434356861}
   - {fileID: -3666451835559630897}
   - {fileID: 2625072870386217671}
