@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level 1 - Train.unity
+    path: Assets/Scenes/MainMenu.unity
+    guid: 841403a5950d7f143891d2de2ad80d86
+  - enabled: 1
+    path: Assets/Scenes/load.unity
+    guid: 97af15fb6c7b41e4098a91448fcf74ec
+  - enabled: 1
+    path: Assets/Scenes/Level1Train.unity
     guid: ff2c1d2a2de99064882fdc37e941ffa9
   m_configObjects: {}
