@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LvlHolder_Train : LvlHolder
 {
@@ -12,8 +13,11 @@ public class LvlHolder_Train : LvlHolder
 
     public GameObject Pof;
 
+    public Image fadeImage;
 
+    public List<Chekpoint> chekpoints = new List<Chekpoint>();
 
+    public Chekpoint myChekpoint;
 
     [Header("Cameras")]
     public GameObject DoorCamera;

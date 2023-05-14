@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Runtime.Serialization;
+using UI.Windows;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +13,8 @@ public class LvlManager_Train : LvlManager
     {
         _trainHolder = (LvlHolder_Train)_holder;
 
+        _trainHolder.fadeImage.canvasRenderer.SetAlpha(0f);
+
         foreach (var enemy in _trainHolder.enemies)
         {
             enemy.DeathEvent += OnEnemyDeath;
@@ -20,7 +24,24 @@ public class LvlManager_Train : LvlManager
         {
             enemy.DeathEvent += OnEnemy2Death;
         }
+
+        foreach (var chekpoint in _trainHolder.chekpoints)
+        {
+            chekpoint.newSave += OnCheckpointSave;
+        }
     }
+
+    private void OnCheckpointSave(Chekpoint chek)
+    {
+        _trainHolder.myChekpoint = chek;
+    }
+
+    public void RelivePlayer() {
+
+        _trainHolder.Player.transform.position = _trainHolder.myChekpoint.transform.position; 
+    
+    }
+
     void OnEnemyDeath(Enemy enemy)
     {
         _trainHolder.enemies.Remove(enemy);
@@ -67,6 +88,18 @@ public class LvlManager_Train : LvlManager
     public void BoxPlaced()
     {
         chek2 = false;
+    }
+
+    public void EndLevel()
+    {
+        _trainHolder.fadeImage.CrossFadeAlpha(1f, 2f, false);
+        Invoke("EndLevelAction", 2f);
+
+    }
+
+    void EndLevelAction()
+    {
+        LoadLvl.StartLoad(E_Scenes.Level2Gorge);
     }
 
     public void OpenDoor()

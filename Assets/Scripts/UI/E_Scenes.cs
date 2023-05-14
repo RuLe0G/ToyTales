@@ -5,6 +5,6 @@ namespace UI.Windows
         MainMenu,
         Load,
         Level1Train,
-        Level2
+        Level2Gorge
     }
 }

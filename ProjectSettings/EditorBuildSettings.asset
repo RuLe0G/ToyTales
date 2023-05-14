@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1Train.unity
     guid: ff2c1d2a2de99064882fdc37e941ffa9
+  - enabled: 1
+    path: Assets/Scenes/Level2Gorge.unity
+    guid: 2fdff8de94adb57428e95e5840521722
   m_configObjects: {}
