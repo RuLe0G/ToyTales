@@ -12,9 +12,16 @@ public class CharStats : MonoBehaviour
     [SerializeField]
     private Freezer freezer;
 
+    public HealthBar healthBar;
+
     public event EventHandler onHpChanged;
 
     public VisualEffect damageParticles;
+
+    private void Start()
+    {
+        healthBar.Setup(this);
+    }
 
     public void Awake()
     {
@@ -25,6 +32,10 @@ public class CharStats : MonoBehaviour
     public int getHealth()
     {
         return HP;
+    }
+    public float getHealthPercent()
+    {
+        return (float)HP / maxHP;
     }
     public bool isMaxHp()
     {
