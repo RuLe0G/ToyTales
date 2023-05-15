@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class new_PlayerMovement : MonoBehaviour
@@ -229,6 +230,21 @@ public class new_PlayerMovement : MonoBehaviour
         return x + y + z;
     }
 
+    public void TeleportTo(Vector3 v)
+    {
+        moveDirection = Vector3.zero;
+        horizontalInput = 0;
+        verticalInput = 0;
+        float t = moveSpeed;
+        moveSpeed = 0;
+
+        transform.position = v;
+
+        moveSpeed = t;
+        horizontalInput = move.ReadValue<Vector2>().x;
+        verticalInput = move.ReadValue<Vector2>().y;
+    }
+
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -267,6 +283,7 @@ public class new_PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
+        playerAnim.SetTrigger("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);

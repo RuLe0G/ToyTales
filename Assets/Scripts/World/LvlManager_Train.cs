@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class LvlManager_Train : LvlManager
 {
-    private LvlHolder_Train _trainHolder;
+    public LvlHolder_Train _trainHolder;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class LvlManager_Train : LvlManager
 
     public void RelivePlayer() {
 
-        _trainHolder.Player.transform.position = _trainHolder.myChekpoint.transform.position; 
+        _trainHolder.Player.GetComponent<new_PlayerMovement>().TeleportTo(_trainHolder.myChekpoint.transform.position);
     
     }
 
@@ -92,9 +92,17 @@ public class LvlManager_Train : LvlManager
 
     public void EndLevel()
     {
-        _trainHolder.fadeImage.CrossFadeAlpha(1f, 2f, false);
+        FadeTo(2);
         Invoke("EndLevelAction", 2f);
 
+    }
+
+    public void FadeTo(float time)
+    {
+        _trainHolder.fadeImage.CrossFadeAlpha(1f, time, false);
+    }public void FadeOut(float time)
+    {
+        _trainHolder.fadeImage.CrossFadeAlpha(0f, time, false);
     }
 
     void EndLevelAction()

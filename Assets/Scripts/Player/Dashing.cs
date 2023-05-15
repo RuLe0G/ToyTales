@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
@@ -23,6 +25,9 @@ public class ThridPersonDash : MonoBehaviour
     private ThridPersonAsset playerActionsAsset;
     private InputAction dashKey;
     private InputAction move;
+
+    public event Action<ThridPersonDash> dashUse;
+    public event Action<ThridPersonDash> dashReset;
 
     [Header("VFX")]
     public float activeTime = 2f;
@@ -71,14 +76,18 @@ public class ThridPersonDash : MonoBehaviour
     {
         if (dashCdTimer > 0)
             dashCdTimer -= Time.deltaTime;
+        else if (dashCdTimer <=0) dashReset?.Invoke(this);
     }
 
     private void Dash()
     {
-
         if (dashCdTimer > 0) return;
         else dashCdTimer = dashCd;
         pm.dashing = true;
+
+
+        dashUse?.Invoke(this);
+        pm.playerAnim.SetTrigger("Dash");
 
         dashVolume.weight = 1;
 
