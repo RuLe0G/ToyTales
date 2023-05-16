@@ -50,12 +50,11 @@ public class SwingCheck : MonoBehaviour
         {
             aud.clip = hitAud;
             aud.Play();
-            Debug.Log("Игрок получил по жопе");
+            other.GetComponent<CharStats>().takeDamage(damage);
         }
         if (other.gameObject.layer == 11)
         {
             var enm = other.gameObject;
-            Debug.Log("Враг получил по жопе");
             enm.GetComponent<Enemy>().GetHurt(damage);
         }
     }

@@ -18,7 +18,7 @@ public class CharStats : MonoBehaviour
 
     public event EventHandler onHpChanged;
 
-    public VisualEffect damageParticles;
+    public ParticleSystem damageParticles;
 
     private void Start()
     {
