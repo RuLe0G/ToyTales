@@ -14,6 +14,31 @@ public class TP_Player : MonoBehaviour
             Invoke("Prik", 0.5f);
         }
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            manager.FadeTo(0.5f);
+            Invoke("Prik", 0.5f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            manager.FadeTo(0.5f);
+            Invoke("Prik", 0.5f);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            manager.FadeTo(0.5f);
+            Invoke("Prik", 0.5f);
+        }
+    }
 
     private void Prik()
     {

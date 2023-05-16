@@ -6,6 +6,8 @@ using UnityEngine.VFX;
 public class CharStats : MonoBehaviour
 {
     [SerializeField]
+    private int coins;
+    [SerializeField]
     private int HP;
     [SerializeField]
     private int maxHP;
@@ -28,6 +30,10 @@ public class CharStats : MonoBehaviour
         HP = maxHP;
 
         freezer = FindObjectOfType<Freezer>();
+    }
+    public void addCoin(int i)
+    {
+        coins += i;
     }
     public int getHealth()
     {

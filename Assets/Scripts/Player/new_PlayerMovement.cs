@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class new_PlayerMovement : MonoBehaviour
@@ -36,7 +35,7 @@ public class new_PlayerMovement : MonoBehaviour
     public Transform orientation;
     public Transform PObj;
     public Animator playerAnim;
-    
+
 
     float horizontalInput;
     float verticalInput;
@@ -88,12 +87,21 @@ public class new_PlayerMovement : MonoBehaviour
         readyToJump = true;
     }
 
+    public void TeleportTo(Vector3 v)
+    {
+        gameObject.transform.position = v;
+    }
+
 
     private void Update()
     {
         float groundCheckRadius = 0.3f;
         Vector3 groundCheckPosition = transform.position + Vector3.down * (playerHeight * 0.5f + groundCheckRadius);
         grounded = Physics.CheckSphere(groundCheckPosition, groundCheckRadius, whatIsGround);
+        if (grounded == false)
+        {
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        }
         if (grounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -230,21 +238,6 @@ public class new_PlayerMovement : MonoBehaviour
         return x + y + z;
     }
 
-    public void TeleportTo(Vector3 v)
-    {
-        moveDirection = Vector3.zero;
-        horizontalInput = 0;
-        verticalInput = 0;
-        float t = moveSpeed;
-        moveSpeed = 0;
-
-        transform.position = v;
-
-        moveSpeed = t;
-        horizontalInput = move.ReadValue<Vector2>().x;
-        verticalInput = move.ReadValue<Vector2>().y;
-    }
-
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -270,7 +263,7 @@ public class new_PlayerMovement : MonoBehaviour
     }
     private void PressJump(InputAction.CallbackContext obj)
     {
-         if (grounded && readyToJump && bufJump)
+        if (grounded && readyToJump && bufJump)
         {
             readyToJump = false;
             Jump();
