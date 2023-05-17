@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71cf7a394d4daec4885c13630fc62e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 10
   player: {fileID: 0}
   nma: {fileID: 1138402907707379073}
   _speed: 10

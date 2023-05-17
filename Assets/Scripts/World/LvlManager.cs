@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [Serializable] class RespawnCheckpoint : UnityEvent { }
 
 [RequireComponent(typeof(LvlHolder))]
-public class LvlManager : Singleton<LvlManager>
+public class LvlManager : MonoBehaviour
 {
     [SerializeField]
     protected LvlHolder _holder;

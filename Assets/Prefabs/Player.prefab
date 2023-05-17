@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 7051675597208362574}
   - component: {fileID: 7943335228607258529}
   - component: {fileID: 4218894365437249147}
+  - component: {fileID: 5100892671464701270}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -42,7 +43,7 @@ Transform:
   - {fileID: 8921236914734766204}
   - {fileID: 7808160314623061039}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4068921228029129861
 Rigidbody:
@@ -106,10 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f1447648b134940978a43d2a0201c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coins: 0
   HP: 100
   maxHP: 100
   freezer: {fileID: 0}
-  damageParticles: {fileID: 3837147132224417415, guid: 5919866bef8e49447bb3f6cdd6ce9961,
+  healthBar: {fileID: 0}
+  damageParticles: {fileID: 5880797563141009103, guid: 265d3a5ba69981a4698ceabcedf368b0,
     type: 3}
   isInvulnerable: 0
 --- !u!114 &7740816576061736598
@@ -131,14 +134,17 @@ MonoBehaviour:
   speedIncreaseMultiplier: 1.5
   climbSpeed: 3
   groundDrag: 4
-  jumpForce: 12
-  jumpCooldown: 0.25
+  jumpForce: 15
+  jumpCooldown: 0.1
   airMultiplier: 0.4
+  readyToJump: 1
   playerHeight: 1
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   grounded: 0
+  coyoteTimeCounter: 0
+  jumpBufferCounter: 0
   orientation: {fileID: 7808160314623061039}
   PObj: {fileID: 8921236914734766204}
   playerAnim: {fileID: 8921236914724992520}
@@ -291,6 +297,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3cea6fe439168fe4fbfbe3c09f681147, type: 2}
   - {fileID: 11400000, guid: 90d34ec9388269a40a76d02c807beffa, type: 2}
   swing: {fileID: 6573770714586497925}
+--- !u!114 &5100892671464701270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274502310898472426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf328f16819ad844b1b81affea4a462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatVaultWall:
+    serializedVersion: 2
+    m_Bits: 128
+  PObj: {fileID: 8921236914734766204}
+  pm: {fileID: 7740816576061736598}
 --- !u!1 &3489732679028434091
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,8 +406,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6567554450767306235}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.605, z: 0.38299942}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.605, z: 0.47}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8921236914734766204}
