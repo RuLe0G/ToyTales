@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class Freezer : Singleton<Freezer>
 {
@@ -9,6 +10,12 @@ public class Freezer : Singleton<Freezer>
     bool _isFrozen = false;
     float _pendingFreezeDuration = 0f;
 
+    float original;
+    private void Start()
+    {
+        original = Time.timeScale;
+    }
+
     private void Update()
     {
         if (_pendingFreezeDuration > 0 && !_isFrozen)
@@ -17,6 +24,16 @@ public class Freezer : Singleton<Freezer>
         }
     }
 
+    public void FreezeNoTimer()
+    {
+        _isFrozen = true;
+        Time.timeScale = 0f;
+    }
+    public void UnFreeze()
+    {
+        Time.timeScale = original;
+        _isFrozen = false;
+    }
 
     public void Freeze()
     {
@@ -26,7 +43,6 @@ public class Freezer : Singleton<Freezer>
     IEnumerator DoFreeze()
     {
         _isFrozen = true;
-        var original = Time.timeScale;
         Time.timeScale = 0f;
 
         yield return new WaitForSecondsRealtime(duration);

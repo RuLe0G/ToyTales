@@ -19,6 +19,10 @@ public class LvlHolder_Train : LvlHolder
 
     public Chekpoint myChekpoint;
 
+    public GameObject menu;
+
     [Header("Cameras")]
     public GameObject DoorCamera;
+
+    public Transform TinTin;
 }

@@ -29,6 +29,10 @@ public class LvlManager_Train : LvlManager
         {
             chekpoint.newSave += OnCheckpointSave;
         }
+
+        _trainHolder.Player.GetComponent<CharStats>().DeathEvent += PLAYERSDOX;
+
+        FadeOut(0);
     }
 
     private void OnCheckpointSave(Chekpoint chek)
@@ -147,6 +151,24 @@ public class LvlManager_Train : LvlManager
         }
         _trainHolder.DoorCamera.SetActive(false);
     }
+    public void PLAYERSDOX()
+    {
+        FadeTo(0.3f);
+        _trainHolder.menu.SetActive(true);
+    }
+    public void toLoad()
+    {
+        _trainHolder.menu.SetActive(false);
+        RelivePlayer();
+        _trainHolder.Player.GetComponent<CharStats>().takeHeal(1000);
+        FadeOut(0.5f);
+    }
+    public void ToMenu()
+    {
+        _trainHolder.menu.SetActive(false);
+        LoadLvl.StartLoad(E_Scenes.MainMenu);
+    }
+
     // Build Actions
     public void ActivateInitEvent()
     {

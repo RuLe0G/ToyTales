@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
+using static Coin;
 
 public class CharStats : MonoBehaviour
 {
@@ -106,9 +107,11 @@ public class CharStats : MonoBehaviour
             onHpChanged(this, EventArgs.Empty);
         }
     }
+    
 
+    public event Action DeathEvent;
     public void death()
     {
-        Debug.Log("ялепрэ " + gameObject.name);
+        DeathEvent?.Invoke();
     }
 }
