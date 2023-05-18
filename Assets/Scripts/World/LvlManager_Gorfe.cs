@@ -4,11 +4,47 @@ using System.Runtime.Serialization;
 using UI.Windows;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class LvlManager_Gorfe : LvlManager
 {
     public LvlHolder_Gorge _gorgeHolder;
 
+    private ThridPersonAsset playerActionsAsset;
+
+    private void Awake()
+    {
+        playerActionsAsset = new ThridPersonAsset();
+    }
+    private void OnEnable()
+    {
+        playerActionsAsset.Player.Menu.started += PressEsc;
+        playerActionsAsset.Player.DEBUG.started += DebugKey;
+        playerActionsAsset.Player.Enable();
+    }
+    bool isMenu;
+    private void PressEsc(InputAction.CallbackContext obj)
+    {
+        if (!isMenu) { 
+        _gorgeHolder.menu.SetActive(true);
+            isMenu= true;
+        }
+        else
+        {
+            _gorgeHolder.menu.SetActive(false);
+            isMenu = false;
+        }
+    }
+    private void DebugKey(InputAction.CallbackContext obj)
+    {
+        RelivePlayer();
+    }
+    private void OnDisable()
+    {
+        playerActionsAsset.Player.Menu.started -= PressEsc;
+        playerActionsAsset.Player.DEBUG.started -= DebugKey;
+        playerActionsAsset.Player.Disable();
+    }
     void Start()
     {
         _gorgeHolder = (LvlHolder_Gorge)_holder;

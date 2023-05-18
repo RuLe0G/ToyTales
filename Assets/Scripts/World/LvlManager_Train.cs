@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Runtime.Serialization;
 using UI.Windows;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class LvlManager_Train : LvlManager
 {
     public LvlHolder_Train _trainHolder;
+
+    private ThridPersonAsset playerActionsAsset;
 
     void Start()
     {
@@ -35,6 +39,41 @@ public class LvlManager_Train : LvlManager
         _trainHolder.Player.GetComponent<CharStats>().DeathEvent += PLAYERSDOX;
 
         FadeOut(0);
+    }
+    private void Awake()
+    {
+        playerActionsAsset = new ThridPersonAsset();
+    }
+    private void OnEnable()
+    {
+        playerActionsAsset.Player.Menu.started += PressEsc;
+        playerActionsAsset.Player.DEBUG.started += DebugKey;
+        playerActionsAsset.Player.Enable();
+    }
+    private void OnDisable()
+    {
+        playerActionsAsset.Player.Menu.started -= PressEsc;
+        playerActionsAsset.Player.DEBUG.started -= DebugKey;
+        playerActionsAsset.Player.Disable();
+    }
+    private void DebugKey(InputAction.CallbackContext obj)
+    {
+        RelivePlayer();
+    }
+
+    bool isMenu;
+    private void PressEsc(InputAction.CallbackContext obj)
+    {
+        if (!isMenu)
+        {
+            _trainHolder.menu.SetActive(true);
+            isMenu = true;
+        }
+        else
+        {
+            _trainHolder.menu.SetActive(false);
+            isMenu = false;
+        }
     }
 
     private void OnCheckpointSave(Chekpoint chek)
