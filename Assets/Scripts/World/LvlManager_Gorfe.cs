@@ -15,6 +15,10 @@ public class LvlManager_Gorfe : LvlManager
 
         _gorgeHolder.fadeImage.canvasRenderer.SetAlpha(0f);
 
+        foreach (var chekpoint in _gorgeHolder.chekpoints)
+        {
+            chekpoint.newSave += OnCheckpointSave;
+        }
 
         _gorgeHolder.Player.GetComponent<CharStats>().DeathEvent += PLAYERSDOX;
 

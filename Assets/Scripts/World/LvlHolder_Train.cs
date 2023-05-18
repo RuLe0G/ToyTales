@@ -11,6 +11,9 @@ public class LvlHolder_Train : LvlHolder
 
     public List<Enemy> enemies2 = new List<Enemy>();
 
+    public Enemy boss;
+    public Transform door2;
+
     public GameObject Pof;
 
     public Image fadeImage;

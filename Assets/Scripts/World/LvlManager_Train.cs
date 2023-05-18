@@ -30,6 +30,8 @@ public class LvlManager_Train : LvlManager
             chekpoint.newSave += OnCheckpointSave;
         }
 
+        _trainHolder.boss.DeathEvent += OnBossDeath;
+
         _trainHolder.Player.GetComponent<CharStats>().DeathEvent += PLAYERSDOX;
 
         FadeOut(0);
@@ -45,7 +47,10 @@ public class LvlManager_Train : LvlManager
         _trainHolder.Player.GetComponent<new_PlayerMovement>().TeleportTo(_trainHolder.myChekpoint.transform.position);
     
     }
-
+    void OnBossDeath(Enemy enemy)
+    {
+        chek3 = true;
+    }
     void OnEnemyDeath(Enemy enemy)
     {
         _trainHolder.enemies.Remove(enemy);
@@ -57,6 +62,7 @@ public class LvlManager_Train : LvlManager
 
     bool chek1 = true;
     bool chek2 = true;
+    bool chek3 = false;
 
     private void Update()
     {
@@ -72,6 +78,10 @@ public class LvlManager_Train : LvlManager
             { }
             else
             SpawnEnemy();
+        }
+        if (chek3)
+        {
+            OpenDoor2();
         }
     }
 
@@ -136,6 +146,29 @@ public class LvlManager_Train : LvlManager
             yield return null;
         }
         _trainHolder.FirstDoor.position = endPos;
+    }
+    public void OpenDoor2()
+    {
+        StartCoroutine(DoorMove2());
+    }
+    IEnumerator DoorMove2()
+    {
+        float a = 0;
+        while (a < 1.5f)
+        {
+            a += Time.deltaTime;
+            yield return null;
+        }
+        Vector3 startPos = _trainHolder.door2.position;
+        Vector3 endPos = startPos - new Vector3(0, 10, 0);
+        float elapsedTime = 0;
+        while (elapsedTime < 1.0f)
+        {
+            _trainHolder.door2.position = Vector3.Lerp(startPos, endPos, elapsedTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        _trainHolder.door2.position = endPos;
     }
     public void ReturnPlayerCamera(float t)
     {
