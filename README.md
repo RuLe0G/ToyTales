@@ -1,3 +1,3 @@
 # ToyTales
 
-Deno - https://youtu.be/o2TppbPkFNo
+Demo - https://youtu.be/o2TppbPkFNo
